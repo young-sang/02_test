@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>유영상 — 개인 소개</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0d0d14;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #fff;
+      padding: 40px 24px;
+    }
+
+    /* 배경 빛번짐 */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    body::before {
+      width: 600px; height: 600px;
+      background: #5b6ef5;
+      top: -180px; left: -160px;
+    }
+    body::after {
+      width: 500px; height: 500px;
+      background: #c45eff;
+      bottom: -150px; right: -120px;
+    }
+
+    .container {
+      max-width: 660px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 헤더 */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .header-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.12));
+    }
+    .header-line:last-child {
+      background: linear-gradient(to left, transparent, rgba(255,255,255,0.12));
+    }
+    .header-title {
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.45em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+    }
+
+    /* 프로필 카드 */
+    .profile-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      padding: 48px;
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 36px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5b6ef5, #c45eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .profile-name {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .profile-sub {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.15em;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 32px;
+    }
+
+    /* 섹션 */
+    .section {
+      margin-bottom: 32px;
+    }
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.28);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* 학교 */
+    .school-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .school-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(124,143,255,0.12);
+      border: 1px solid rgba(124,143,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .school-name {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+    }
+
+    /* 기술 스택 */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      cursor: default;
+      transition: all 0.2s ease;
+    }
+
+    .skill-tag.primary {
+      background: rgba(124,143,255,0.15);
+      border: 1px solid rgba(124,143,255,0.3);
+      color: rgba(160,175,255,0.9);
+    }
+    .skill-tag.primary:hover {
+      background: rgba(124,143,255,0.25);
+      border-color: rgba(124,143,255,0.5);
+      transform: translateY(-1px);
+    }
+
+    .skill-tag.secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.45);
+    }
+    .skill-tag.secondary:hover {
+      border-color: rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.65);
+      transform: translateY(-1px);
+    }
+
+    /* 연락 버튼 */
+    .contact-row {
+      margin-top: 36px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-contact {
+      cursor: pointer;
+      border: none;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      background: rgba(124,143,255,0.9);
+      color: #fff;
+      padding: 9px 22px;
+      transition: all 0.2s ease;
+    }
+    .btn-contact:hover {
+      background: #7c8fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(124,143,255,0.35);
+    }
+
+    /* 토스트 */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: rgba(30,30,46,0.95);
+      border: 1px solid rgba(124,143,255,0.3);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      padding: 10px 20px;
+      border-radius: 100px;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div class="header-line"></div>
+      <p class="header-title">Portfolio</p>
+      <div class="header-line"></div>
+    </div>
+
+    <div class="profile-card">
+
+      <div class="profile-top">
+        <div class="avatar" id="avatarInitial"></div>
+        <div>
+          <p class="profile-name" id="profileName"></p>
+          <p class="profile-sub">Developer</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <p class="section-label">Education</p>
+        <div class="school-row">
+          <div class="school-icon">🎓</div>
+          <p class="school-name" id="schoolName"></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="section-label">Tech Stack</p>
+        <div class="skills" id="skillList"></div>
+      </div>
+
+      <div class="contact-row">
+        <button class="btn-contact" onclick="copyName()">이름 복사하기</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast">클립보드에 복사되었습니다</div>
+
+  <script>
+    const profile = {
+      name: "유영상",
+      school: "강남대학교",
+      skills: ["JAVA", "HTML", "CSS", "JS"],
+    };
+
+    // 아바타 이니셜 (성)
+    document.getElementById('avatarInitial').textContent = profile.name[0];
+    document.getElementById('profileName').textContent = profile.name;
+    document.getElementById('schoolName').textContent = profile.school;
+
+    // 기술 스택 태그 생성
+    const primarySkills = ["JAVA", "JS"];
+    const skillList = document.getElementById('skillList');
+    profile.skills.forEach(skill => {
+      const tag = document.createElement('span');
+      tag.className = 'skill-tag ' + (primarySkills.includes(skill) ? 'primary' : 'secondary');
+      tag.textContent = skill;
+      skillList.appendChild(tag);
+    });
+
+    // 이름 복사
+    function copyName() {
+      navigator.clipboard.writeText(profile.name).then(() => showToast());
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+</html>
